@@ -1,7 +1,5 @@
 # Support
 
-# Support
-
 > ⚠️**Note:** For the full details on the support statements, SLAs, and more for the Azure Verified Modules (AVM) initiative please visit [aka.ms/AVM/Support](https://aka.ms/avm/support) ⚠️
 
 ## How to file issues and get help

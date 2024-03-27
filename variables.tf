@@ -179,4 +179,3 @@ variable "azurerm_sql_instance_pool_service_tier" {
   default     = "GeneralPurpose"
   description = "Select from the latest vCore service tiers available for Azure SQL Managed Instances in the pool."
 }
-

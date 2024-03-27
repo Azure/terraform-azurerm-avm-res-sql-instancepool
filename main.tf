@@ -224,3 +224,4 @@ resource "azurerm_monitor_diagnostic_setting" "this" {
 locals {
   subnet_id = var.create_new_subnet ? azurerm_subnet.this[0].id : var.existing_subnet_id
 }
+
