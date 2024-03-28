@@ -24,8 +24,8 @@ module "naming" {
 }
 
 resource "azurerm_resource_group" "this" {
-  name     = module.naming.resource_group.name_unique
   location = module.regions.regions[random_integer.region_index.result].name
+  name     = module.naming.resource_group.name_unique
 }
 
 # This is the module call

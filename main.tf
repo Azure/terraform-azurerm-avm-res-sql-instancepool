@@ -1,141 +1,144 @@
 resource "azurerm_network_security_group" "this" {
-  name                = var.azurerm_network_security_group_name
   location            = var.location
+  name                = var.azurerm_network_security_group_name
   resource_group_name = var.resource_group_name
 }
 
 resource "azurerm_network_security_rule" "allow_management_inbound" {
-  name                        = "allow_management_inbound"
-  priority                    = 106
-  direction                   = "Inbound"
   access                      = "Allow"
+  direction                   = "Inbound"
+  name                        = "allow_management_inbound"
+  network_security_group_name = azurerm_network_security_group.this.name
+  priority                    = 106
   protocol                    = "Tcp"
-  source_port_range           = "*"
+  resource_group_name         = var.resource_group_name
+  destination_address_prefix  = "*"
   destination_port_ranges     = ["9000", "9003", "1438", "1440", "1452"]
   source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.this.name
+  source_port_range           = "*"
 }
 
 resource "azurerm_network_security_rule" "allow_misubnet_inbound" {
-  name                        = "allow_misubnet_inbound"
-  priority                    = 200
-  direction                   = "Inbound"
   access                      = "Allow"
+  direction                   = "Inbound"
+  name                        = "allow_misubnet_inbound"
+  network_security_group_name = azurerm_network_security_group.this.name
+  priority                    = 200
   protocol                    = "*"
-  source_port_range           = "*"
+  resource_group_name         = var.resource_group_name
+  destination_address_prefix  = "*"
   destination_port_range      = "*"
   source_address_prefix       = "10.0.0.0/24"
-  destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.this.name
+  source_port_range           = "*"
 }
 
 resource "azurerm_network_security_rule" "allow_health_probe_inbound" {
-  name                        = "allow_health_probe_inbound"
-  priority                    = 300
-  direction                   = "Inbound"
   access                      = "Allow"
+  direction                   = "Inbound"
+  name                        = "allow_health_probe_inbound"
+  network_security_group_name = azurerm_network_security_group.this.name
+  priority                    = 300
   protocol                    = "*"
-  source_port_range           = "*"
+  resource_group_name         = var.resource_group_name
+  destination_address_prefix  = "*"
   destination_port_range      = "*"
   source_address_prefix       = "AzureLoadBalancer"
-  destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.this.name
+  source_port_range           = "*"
 }
 
 resource "azurerm_network_security_rule" "allow_tds_inbound" {
-  name                        = "allow_tds_inbound"
-  priority                    = 1000
-  direction                   = "Inbound"
   access                      = "Allow"
+  direction                   = "Inbound"
+  name                        = "allow_tds_inbound"
+  network_security_group_name = azurerm_network_security_group.this.name
+  priority                    = 1000
   protocol                    = "Tcp"
-  source_port_range           = "*"
+  resource_group_name         = var.resource_group_name
+  destination_address_prefix  = "*"
   destination_port_range      = "1433"
   source_address_prefix       = "VirtualNetwork"
-  destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.this.name
+  source_port_range           = "*"
 }
 
 resource "azurerm_network_security_rule" "deny_all_inbound" {
-  name                        = "deny_all_inbound"
-  priority                    = 4096
-  direction                   = "Inbound"
   access                      = "Deny"
+  direction                   = "Inbound"
+  name                        = "deny_all_inbound"
+  network_security_group_name = azurerm_network_security_group.this.name
+  priority                    = 4096
   protocol                    = "*"
-  source_port_range           = "*"
+  resource_group_name         = var.resource_group_name
+  destination_address_prefix  = "*"
   destination_port_range      = "*"
   source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.this.name
+  source_port_range           = "*"
 }
 
 resource "azurerm_network_security_rule" "allow_management_outbound" {
-  name                        = "allow_management_outbound"
-  priority                    = 102
-  direction                   = "Outbound"
   access                      = "Allow"
+  direction                   = "Outbound"
+  name                        = "allow_management_outbound"
+  network_security_group_name = azurerm_network_security_group.this.name
+  priority                    = 102
   protocol                    = "Tcp"
-  source_port_range           = "*"
+  resource_group_name         = var.resource_group_name
+  destination_address_prefix  = "*"
   destination_port_ranges     = ["80", "443", "12000"]
   source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.this.name
+  source_port_range           = "*"
 }
 
 resource "azurerm_network_security_rule" "allow_misubnet_outbound" {
-  name                        = "allow_misubnet_outbound"
-  priority                    = 200
-  direction                   = "Outbound"
   access                      = "Allow"
+  direction                   = "Outbound"
+  name                        = "allow_misubnet_outbound"
+  network_security_group_name = azurerm_network_security_group.this.name
+  priority                    = 200
   protocol                    = "*"
-  source_port_range           = "*"
+  resource_group_name         = var.resource_group_name
+  destination_address_prefix  = "*"
   destination_port_range      = "*"
   source_address_prefix       = "10.0.0.0/24"
-  destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.this.name
+  source_port_range           = "*"
 }
 
 resource "azurerm_network_security_rule" "deny_all_outbound" {
-  name                        = "deny_all_outbound"
-  priority                    = 4096
-  direction                   = "Outbound"
   access                      = "Deny"
+  direction                   = "Outbound"
+  name                        = "deny_all_outbound"
+  network_security_group_name = azurerm_network_security_group.this.name
+  priority                    = 4096
   protocol                    = "*"
-  source_port_range           = "*"
+  resource_group_name         = var.resource_group_name
+  destination_address_prefix  = "*"
   destination_port_range      = "*"
   source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.this.name
+  source_port_range           = "*"
 }
 
 resource "azurerm_virtual_network" "this" {
-  count               = var.create_new_vnet ? 1 : 0
-  name                = var.azurerm_virtual_network_name
-  resource_group_name = var.resource_group_name
+  count = var.create_new_vnet ? 1 : 0
+
   address_space       = [var.azurerm_virtual_network_address_space]
   location            = var.location
+  name                = var.azurerm_virtual_network_name
+  resource_group_name = var.resource_group_name
 }
 
 data "azurerm_virtual_network" "this" {
-  count               = var.create_new_vnet ? 0 : 1
+  count = var.create_new_vnet ? 0 : 1
+
   name                = var.azurerm_virtual_network_name
   resource_group_name = var.resource_group_name
 }
 
 resource "azurerm_subnet" "this" {
-  count                = var.create_new_subnet ? 1 : 0
+  count = var.create_new_subnet ? 1 : 0
+
+  address_prefixes     = [var.azurerm_sql_instance_pool_subnet_address_prefixes]
   name                 = var.azurerm_sql_instance_pool_subnet_name
   resource_group_name  = var.resource_group_name
   virtual_network_name = var.azurerm_virtual_network_name
-  address_prefixes     = [var.azurerm_sql_instance_pool_subnet_address_prefixes]
 
   delegation {
     name = "managedinstancedelegation"
@@ -148,28 +151,24 @@ resource "azurerm_subnet" "this" {
 }
 
 resource "azurerm_subnet_network_security_group_association" "this" {
-  subnet_id                 = local.subnet_id
   network_security_group_id = azurerm_network_security_group.this.id
+  subnet_id                 = local.subnet_id
 }
 
 resource "azurerm_route_table" "this" {
-  name                          = var.azurerm_route_table_name
   location                      = var.location
+  name                          = var.azurerm_route_table_name
   resource_group_name           = var.resource_group_name
   disable_bgp_route_propagation = false
 }
 
 resource "azurerm_subnet_route_table_association" "this" {
-  subnet_id      = local.subnet_id
   route_table_id = azurerm_route_table.this.id
+  subnet_id      = local.subnet_id
 }
 
 resource "azapi_resource" "this" {
-  type      = "Microsoft.Sql/instancePools@2023-05-01-preview"
-  name      = var.name
-  location  = var.location
-  parent_id = var.resource_group_id
-  tags      = var.tags
+  type = "Microsoft.Sql/instancePools@2023-05-01-preview"
   body = jsonencode({
     properties = {
       licenseType = var.azurerm_sql_instance_pool_license_type
@@ -182,6 +181,11 @@ resource "azapi_resource" "this" {
       tier   = var.azurerm_sql_instance_pool_service_tier
     }
   })
+  location  = var.location
+  name      = var.name
+  parent_id = var.resource_group_id
+  tags      = var.tags
+
   timeouts {
     create = "1h30m"
     delete = "1h30m"

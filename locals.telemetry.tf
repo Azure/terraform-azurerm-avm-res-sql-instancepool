@@ -1,15 +1,6 @@
 locals {
-  # This is the unique id AVM Terraform modules that is supplied by the AVM team.
-  # See https://azure.github.io/Azure-Verified-Modules/specs/shared/#id-sfr3---category-telemetry---deploymentusage-telemetry
-  telem_puid = "46d3xgtf"
-
   module_name = "terraform-azurerm-avm-res-sql-instancepool"
-
   module_type = "res"
-
-  # This ensures we don't get errors if telemetry is disabled.
-  telem_random_hex = can(random_id.telem[0].hex) ? random_id.telem[0].hex : ""
-
   telem_arm_deployment_name = substr(
     format(
       "%s.%s.%s.v%s.%s",
@@ -22,7 +13,6 @@ locals {
     0,
     64
   )
-
   # This is an empty ARM deployment template.
   telem_arm_template_content = jsonencode(
     {
@@ -39,4 +29,9 @@ locals {
       }
     }
   )
+  # This is the unique id AVM Terraform modules that is supplied by the AVM team.
+  # See https://azure.github.io/Azure-Verified-Modules/specs/shared/#id-sfr3---category-telemetry---deploymentusage-telemetry
+  telem_puid = "46d3xgtf"
+  # This ensures we don't get errors if telemetry is disabled.
+  telem_random_hex = can(random_id.telem[0].hex) ? random_id.telem[0].hex : ""
 }
